@@ -4,6 +4,10 @@ public class PlayerState
 {
     protected PlayerStateMachine stateMachine;
     protected Player player;
+
+    protected Rigidbody2D rb;
+
+    protected float xInput;
     private string animatorBoolName;
 
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animatorBoolName)
@@ -16,11 +20,12 @@ public class PlayerState
     public virtual void Enter()
     {
         player.animator.SetBool(animatorBoolName, true);
+        rb = player.rb;
     }
 
     public virtual void Update()
     {
-        Debug.Log("I`m in" + animatorBoolName);
+        xInput = Input.GetAxisRaw("Horizontal");
     }
 
     public virtual void Exit()
