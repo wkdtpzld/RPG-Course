@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class PlayerState
@@ -9,6 +10,8 @@ public class PlayerState
 
     protected float xInput;
     private string animatorBoolName;
+
+    protected float stateTimer;
 
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animatorBoolName)
     {
@@ -25,6 +28,8 @@ public class PlayerState
 
     public virtual void Update()
     {
+        stateTimer -= Time.deltaTime;
+
         xInput = Input.GetAxisRaw("Horizontal");
 
         player.animator.SetFloat("yVelocity", rb.linearVelocity.y);
