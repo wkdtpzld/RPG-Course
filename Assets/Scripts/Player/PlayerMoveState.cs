@@ -15,6 +15,11 @@ public class PlayerMoveState : PlayerGroundedState
         base.Update();
         player.SetVelocity(xInput * player.moveSpeed, rb.linearVelocity.y);
 
+        if (xInput == player.facingDir && player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.idleState);
+        };
+
         if (xInput == 0)
         {
             stateMachine.ChangeState(player.idleState);

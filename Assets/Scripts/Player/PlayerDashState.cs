@@ -11,17 +11,21 @@ public class PlayerDashState : PlayerState
         base.Enter();
 
         stateTimer = player.dashDuration;
+        rb.gravityScale = 0;
     }
 
     public override void Update()
     {
+        base.Update();
         player.SetVelocity(player.dashSpeed * player.dashDirection, 0);
         if (stateTimer < 0)
         {
             stateMachine.ChangeState(player.idleState);
         }
-
-        base.Update();
+        if (player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.wallSlideState);
+        }
     }
 
     public override void Exit()
@@ -29,5 +33,6 @@ public class PlayerDashState : PlayerState
         base.Exit();
 
         player.SetVelocity(0, rb.linearVelocity.y);
+        rb.gravityScale = 3.5f;
     }
 }

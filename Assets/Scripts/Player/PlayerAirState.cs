@@ -20,9 +20,19 @@ public class PlayerAirState : PlayerState
     {
         base.Update();
 
+        if (xInput != 0)
+        {
+            player.SetVelocity(xInput * player.moveSpeed * .8f, rb.linearVelocity.y);
+        }
+
         if (player.IsGroundDetected())
         {
             stateMachine.ChangeState(player.idleState);
+        }
+
+        if (player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.wallSlideState);
         }
     }
 }
