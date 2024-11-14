@@ -3,6 +3,8 @@
 ## 목차
 
 1. FSM 패턴
+2. Sub-state Machine
+3. 코루틴
 
 
 ## 1. FSM 패턴
@@ -112,3 +114,48 @@ public class Player : MonoBehaviour
 새로운 상태를 추가하거나 전환 조건을 변경하기 쉬워져 디버깅에 용이
 
 현재 상태를 추적하기 쉬워 상태 전환 문제를 찾기 편리.
+
+
+## 2. Sub-State Machine
+
+공격 모션의 애니메이션 관리를 위해서 Animator 에서 우클릭 후 Sub-State Machine 을 클릭하여 생성 및 관리
+
+![image](https://github.com/user-attachments/assets/f7ce7071-6a38-4d12-9171-b7149f37b747)
+
+![image](https://github.com/user-attachments/assets/94ffed04-76eb-443b-a724-90674a6d11a6)
+
+더블클릭을 하여 입장하면 아무것도 없겠지만 여기서 공격을 위한 애니메이션 State 관리가 가능하다.
+
+Make Transition 에서 Sub-State 에 관해서 의존성을 넣을지, 안쪽 State 개별에 의존성을 넣을지 선택 가능하다.
+
+playerAttack 은 공통적으로 Attack 이라는 변수가 공통적으로 True 일 경우에만 발동하므로 Attack=true 일 경우의 변수를 안에 다 때려박아서 관리 가능하다.
+
+## 3. 코루틴
+
+유니티에서는 특정 코드가 반복적으로 실행하기 위해서 MonoBehaviour 클래스를 상속받은 클래스에 void Update() 를 실행시켜야 하지만
+
+Update 외에도 실행시켜야 할 경우가 존재한다.
+
+이럴때 코루틴 을 사용하면 해결이 가능하다.
+
+또한 자신이 필요한 순간에만 반복, 필요하지 않을 경우에는 사용하지 않음으로써 자원관리를 효과적으로 할 수 있다.
+
+코루틴의 조건이 있다.
+
+1. IEnumerator 라는 반환형 함수를 작성해야 한다.
+2. yield return 이 함수 내부에 존재해야 한다.
+
+```c#
+    public bool isBusy { get; private set; }
+
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true;
+
+        yield return new WaitForSeconds(_seconds);
+
+        isBusy = false;
+    }
+```
+
+Player 의 변수에 public isBusy 라는 변수를 생성하고. isBusy 일 경우에 특정 행동을 하지 못하도록 제한을 걸기 위해서 만들어보았다.
