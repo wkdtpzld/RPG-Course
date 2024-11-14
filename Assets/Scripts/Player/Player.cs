@@ -1,8 +1,13 @@
+using System.Collections;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Attack Detail")]
+    public bool isBusy { get; private set; }
+    public Vector2[] attackMovement;
+
     [Header("Move Info")]
     public float moveSpeed;
     public float jumpForce;
@@ -39,6 +44,7 @@ public class Player : MonoBehaviour
     public PlayerWallSlideState wallSlideState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerWallJumpState wallJumpState { get; private set; }
+    public PlayerPrimaryAttack primaryAttack { get; private set; }
     #endregion
 
     private void Awake()
@@ -52,6 +58,7 @@ public class Player : MonoBehaviour
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
         wallJumpState = new PlayerWallJumpState(this, stateMachine, "Jump");
+        primaryAttack = new PlayerPrimaryAttack(this, stateMachine, "Attack");
     }
 
     private void Start()
@@ -68,11 +75,7 @@ public class Player : MonoBehaviour
         ChekcForDashInput();
     }
 
-    public void SetVelocity(float _xVelocity, float _yVelocity)
-    {
-        rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
-        FlipController(_xVelocity);
-    }
+    #region Collision
 
     private void OnDrawGizmos()
     {
@@ -82,7 +85,9 @@ public class Player : MonoBehaviour
 
     public bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
     public bool IsWallDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, wallCheckDistance, whatIsGround);
+    #endregion
 
+    #region Flip
     public void Flip()
     {
         facingDir = facingDir * -1;
@@ -96,6 +101,28 @@ public class Player : MonoBehaviour
             Flip();
         else if (_x < 0 && facingRight)
             Flip();
+    }
+    #endregion
+
+    #region Velocity
+    public void SetVelocity(float _xVelocity, float _yVelocity)
+    {
+        rb.linearVelocity = new Vector2(_xVelocity, _yVelocity);
+        FlipController(_xVelocity);
+    }
+
+    public void ZeroVelocity() => rb.linearVelocity = new Vector2(0, 0);
+    #endregion
+
+    public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+
+    public IEnumerator BusyFor(float _seconds)
+    {
+        isBusy = true;
+
+        yield return new WaitForSeconds(_seconds);
+
+        isBusy = false;
     }
 
     private void ChekcForDashInput()

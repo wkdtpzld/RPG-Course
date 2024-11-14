@@ -29,5 +29,10 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.jumpState);
         }
+
+        if (Input.GetKey(KeyCode.J))
+        {
+            stateMachine.ChangeState(player.primaryAttack);
+        }
     }
 }
