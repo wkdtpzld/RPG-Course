@@ -49,7 +49,7 @@ public class PlayerPrimaryAttack : PlayerState
     {
         base.Exit();
 
-        player.StartCoroutine("BusyFor", .15f);
+        player.StartCoroutine(player.BusyFor(.15f));
 
         comboCounter++;
         lastTimeAttacked = Time.time;
