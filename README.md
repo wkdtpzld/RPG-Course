@@ -5,7 +5,8 @@
 1. FSM 패턴
 2. Sub-state Machine
 3. 코루틴
-
+4. Sorting Layer
+5. Cinematic Studio (Camera)
 
 ## 1. FSM 패턴
 
@@ -159,3 +160,31 @@ Update 외에도 실행시켜야 할 경우가 존재한다.
 ```
 
 Player 의 변수에 public isBusy 라는 변수를 생성하고. isBusy 일 경우에 특정 행동을 하지 못하도록 제한을 걸기 위해서 만들어보았다.
+
+## 4. Sorting Layer
+
+간단하게 말해서 CSS ZIndex 같은 느낌으로 이해했는데.. 이게 맞나 싶다.
+
+![image](https://github.com/user-attachments/assets/9feac5a4-03e5-44fa-bee3-8f6ca0fda304)
+
+각 Sprite Renderer 에서 
+
+![image](https://github.com/user-attachments/assets/9c82f994-4caa-4cfd-9ad4-f59f0580fe09)
+
+Sorting Layer 에 맞는 순으로 체크하면 ZIndex 설정 가능하다.
+
+![image](https://github.com/user-attachments/assets/97802376-dbd6-4b65-9131-0443a57387e1)
+
+## 5. Cinematic Studio Camera
+
+![image](https://github.com/user-attachments/assets/8f8c0f8b-270f-46e2-bf02-ba18b24c95fc)
+
+패키지 다운로드 후 Cinematic Camera 오브젝트를 생성하면 자동으로 기본 세팅이 이루어지는데
+
+이렇게 편해도 되나싶다. 구동원리도 모르겠고 그냥 툴을 쓰는듯이 카메라 무빙이 세팅이 가능한데. 일단 쓴다고는 하니까.. 써봤는데 너~무 편하다.
+
+![image](https://github.com/user-attachments/assets/6390a5d5-8566-4177-bed2-eecd20f22df3)
+
+각각에 옵션들은 너무 많다보니 하나하나 언급하기 어렵지만.
+
+카메라가 움직이는 속도. 최소범위 최대범위, 부드러운 정도, 카메라 위치, 크기, 등등 세세한 움직임이 가능하다.
