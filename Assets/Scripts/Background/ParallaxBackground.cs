@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class ParallaxBackground : MonoBehaviour
 {
-    private GameObject cam;
+    public Camera cam;
     [SerializeField] private float parallaxEffect;
     private float xPosition;
     private float length;
 
     void Start()
     {
-        cam = GameObject.Find("Main Camera");
-
         length = GetComponent<SpriteRenderer>().bounds.size.x;
         xPosition = transform.position.x;
     }

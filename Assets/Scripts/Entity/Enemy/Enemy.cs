@@ -9,9 +9,17 @@ public class Enemy : Entity
     [Header("Move Info")]
     public float moveSpeed;
     public float idleTime;
+    public float battleTime;
+    public float detectDistance;
 
     [Header("Attack Info")]
     public float attackDistance;
+    public float attackCooldown;
+    public float attackViewDistance;
+    [HideInInspector] public float lastTimeAttacked;
+
+    [Header("Player")]
+    [SerializeField] public Player player;
 
 
     override protected void Awake()
@@ -38,4 +46,6 @@ public class Enemy : Entity
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(transform.position, new Vector3(transform.position.x + attackDistance * facingDir, transform.position.y));
     }
+
+    public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationTrigger();
 }

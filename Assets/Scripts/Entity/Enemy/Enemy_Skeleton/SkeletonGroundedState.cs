@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class EnemyGroundedState : EnemyState
+public class SkeletonGroundedState : EnemyState
 {
     protected Enemy_Skeleton enemy;
-    public EnemyGroundedState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animatorBoolName, Enemy_Skeleton _enemy) : base(_enemyBase, _stateMachine, _animatorBoolName)
+    public SkeletonGroundedState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animatorBoolName, Enemy_Skeleton _enemy) : base(_enemyBase, _stateMachine, _animatorBoolName)
     {
         this.enemy = _enemy;
     }
@@ -17,7 +17,7 @@ public class EnemyGroundedState : EnemyState
     {
         base.Update();
 
-        if (enemy.IsPlayerDetected())
+        if (enemy.IsPlayerDetected() || Vector2.Distance(enemy.transform.position, playerTransform.position) < enemy.detectDistance)
         {
             stateMachine.ChangeState(enemy.battleState);
         }

@@ -55,7 +55,7 @@ public class Entity : MonoBehaviour
         FlipController(_xVelocity);
     }
 
-    public void ZeroVelocity() => rb.linearVelocity = new Vector2(0, 0);
+    public void SetZeroVelocity() => rb.linearVelocity = new Vector2(0, 0);
     #endregion
 
     protected virtual void Awake()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletonIdleState : EnemyGroundedState
+public class SkeletonIdleState : SkeletonGroundedState
 {
     public SkeletonIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animatorBoolName, Enemy_Skeleton _enemy) : base(_enemyBase, _stateMachine, _animatorBoolName, _enemy)
     {
