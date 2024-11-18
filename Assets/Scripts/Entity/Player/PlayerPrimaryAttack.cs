@@ -12,6 +12,7 @@ public class PlayerPrimaryAttack : PlayerState
     public override void Enter()
     {
         base.Enter();
+        xInput = 0; // 공격시 방향이 이상하게 가는 버그를 고치기 위함의 코드. (xInput 초기화)
 
         if (comboCounter > 2 || Time.time >= lastTimeAttacked + comboWindow)
         {
