@@ -5,6 +5,7 @@ public class Enemy_Skeleton : Enemy
     #region States
     public SkeletonIdleState idleState { get; private set; }
     public SkeletonMoveState moveState { get; private set; }
+    public SkeletonBattleState battleState { get; private set; }
     #endregion
 
 
@@ -12,6 +13,7 @@ public class Enemy_Skeleton : Enemy
     {
         base.Awake();
 
+        battleState = new SkeletonBattleState(this, stateMachine, "Move", this);
         idleState = new SkeletonIdleState(this, stateMachine, "Idle", this);
         moveState = new SkeletonMoveState(this, stateMachine, "Move", this);
     }
