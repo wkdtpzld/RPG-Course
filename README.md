@@ -7,6 +7,7 @@
 3. 코루틴
 4. Sorting Layer
 5. Cinematic Studio (Camera)
+6. 싱글톤 패턴
 
 ## 1. FSM 패턴
 
@@ -187,3 +188,37 @@ Sorting Layer 에 맞는 순으로 체크하면 ZIndex 설정 가능하다.
 각각에 옵션들은 너무 많다보니 하나하나 언급하기 어렵지만.
 
 카메라가 움직이는 속도. 최소범위 최대범위, 부드러운 정도, 카메라 위치, 크기, 등등 세세한 움직임이 가능하다.
+
+## 6. 싱글톤 패턴
+
+싱글톤 패턴은 프로젝트 어디서든 같은 인스턴스를 참조할 수 있도록 설계된 디자인 패턴입니다.
+
+밑과 같은 Manager를 만들어 둔다면.
+전역 어디서든 Player 라는 인스턴스에 접근이 가능해집니다.
+
+초보자들에게 쉽게 추천되는 방식이라고 합니다. 저도 지금 당장 싱글톤이 나왔지만 검색해보니 다른 방식도 많이 사용한다고 합니다.
+
+클래스간 결합도가 너무 많아지며. 테스트가 어렵고 전역 상태관리가 힘들다고 합니다.
+
+```c#
+
+public class PlayerManager : MonoBehaviour
+{
+    public static PlayerManager instance;
+    public Player player;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(instance.gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+        }
+    }
+}
+
+```
