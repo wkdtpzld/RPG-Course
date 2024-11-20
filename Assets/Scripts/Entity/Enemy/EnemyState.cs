@@ -5,7 +5,6 @@ public class EnemyState
     protected EnemyStateMachine stateMachine;
     protected Enemy enemyBase;
     protected Rigidbody2D rb;
-    protected Transform playerTransform;
 
     protected bool triggerCalled;
     private string animatorBoolName;
@@ -23,7 +22,6 @@ public class EnemyState
     {
         triggerCalled = false;
         rb = enemyBase.rb;
-        playerTransform = enemyBase.player.transform;
         enemyBase.animator.SetBool(animatorBoolName, true);
     }
 

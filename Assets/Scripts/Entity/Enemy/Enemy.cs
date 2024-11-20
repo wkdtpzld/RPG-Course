@@ -24,9 +24,6 @@ public class Enemy : Entity
     public float attackViewDistance;
     [HideInInspector] public float lastTimeAttacked;
 
-    [Header("Player")]
-    [SerializeField] public Player player;
-
 
     override protected void Awake()
     {
