@@ -12,7 +12,9 @@ public class PlayerManager : MonoBehaviour
             Destroy(instance.gameObject);
             return;
         }
-        instance = this;
-        DontDestroyOnLoad(instance.gameObject);
+        else
+        {
+            instance = this;
+        }
     }
 }
