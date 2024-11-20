@@ -47,5 +47,7 @@ public class EntityFX : MonoBehaviour
     public void StopBlink()
     {
         isBlinking = false;
+        sr.color = Color.white;
+        sr.material = originalMat;
     }
 }

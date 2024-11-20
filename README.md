@@ -37,7 +37,7 @@ FSM이 시작할 때 시스템의 초기 상태.
 public class PlayerStateMachine
 {
     public PlayerState currentState { get; private set; }
-    
+
     public void Initialize(PlayerState _startState)
     {
         currentState = _startState;
@@ -116,7 +116,6 @@ public class Player : MonoBehaviour
 
 현재 상태를 추적하기 쉬워 상태 전환 문제를 찾기 편리.
 
-
 ## 2. Sub-State Machine
 
 공격 모션의 애니메이션 관리를 위해서 Animator 에서 우클릭 후 Sub-State Machine 을 클릭하여 생성 및 관리
@@ -167,7 +166,7 @@ Player 의 변수에 public isBusy 라는 변수를 생성하고. isBusy 일 경
 
 ![image](https://github.com/user-attachments/assets/9feac5a4-03e5-44fa-bee3-8f6ca0fda304)
 
-각 Sprite Renderer 에서 
+각 Sprite Renderer 에서
 
 ![image](https://github.com/user-attachments/assets/9c82f994-4caa-4cfd-9ad4-f59f0580fe09)
 
