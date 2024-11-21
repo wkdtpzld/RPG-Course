@@ -20,6 +20,11 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            stateMachine.ChangeState(player.aimSowrd);
+        }
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             stateMachine.ChangeState(player.counterAttack);
@@ -35,7 +40,7 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.jumpState);
         }
 
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             stateMachine.ChangeState(player.primaryAttack);
         }
