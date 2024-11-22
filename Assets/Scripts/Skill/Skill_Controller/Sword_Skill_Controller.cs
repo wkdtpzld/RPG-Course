@@ -50,7 +50,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             if (Vector2.Distance(transform.position, player.transform.position) < 1)
             {
                 animator.SetBool("Rotation", false);
-                player.ClearTheSword();
+                player.CatchTheSword();
             }
         }
     }

@@ -17,14 +17,29 @@ public class PlayerAimSwordState : PlayerState
     {
         base.Update();
 
+        player.rb.linearVelocity = new Vector2(0, 0);
+
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             stateMachine.ChangeState(player.idleState);
+        }
+
+        Vector2 mousePostion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (player.transform.position.x > mousePostion.x && player.facingDir == 1)
+        {
+            player.Flip();
+        }
+        else if (player.transform.position.x < mousePostion.x && player.facingDir == -1)
+        {
+            player.Flip();
         }
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        player.StartCoroutine(player.BusyFor(.2f));
     }
 }

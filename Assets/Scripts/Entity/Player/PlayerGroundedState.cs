@@ -22,6 +22,7 @@ public class PlayerGroundedState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
         {
+            player.StartCoroutine(player.BusyFor(1f));
             stateMachine.ChangeState(player.aimSowrd);
         }
 
