@@ -26,6 +26,8 @@ public class Sword_Skill : Skill
 
     protected override void Update()
     {
+        base.Update();
+
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             finalDir = new Vector2(AimDirection().normalized.x * launchDir.x, AimDirection().normalized.y * launchDir.y);
@@ -45,7 +47,8 @@ public class Sword_Skill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         Sword_Skill_Controller newSwordScript = newSword.GetComponent<Sword_Skill_Controller>();
 
-        newSwordScript.SetUpSword(finalDir, swordGravity);
+        newSwordScript.SetUpSword(finalDir, swordGravity, player);
+        player.AssignNewSword(newSword);
 
         DotsActive(false);
     }

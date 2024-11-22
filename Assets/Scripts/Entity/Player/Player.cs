@@ -17,7 +17,7 @@ public class Player : Entity
     public float dashSpeed;
     public float dashDuration;
     public SkillManager skill { get; private set; }
-
+    public GameObject sword;
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
     public PlayerIdleState idleState { get; private set; }
@@ -89,5 +89,15 @@ public class Player : Entity
             }
             stateMachine.ChangeState(dashState);
         }
+    }
+
+    public void AssignNewSword(GameObject _newSword)
+    {
+        sword = _newSword;
+    }
+
+    public void ClearTheSword()
+    {
+        Destroy(sword);
     }
 }
