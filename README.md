@@ -1,5 +1,3 @@
-![image](https://github.com/user-attachments/assets/34a5ba50-7939-4774-a204-edd0fb6207ee)# RPG-Course
-
 ## 목차
 
 개선 사항.
