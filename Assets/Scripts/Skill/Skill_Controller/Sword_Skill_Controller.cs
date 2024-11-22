@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,12 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private bool canRotate = true;
     private bool isReturning;
+
+    public float bounceSpeed;
+    public bool isBouncing = true;
+    public int amountOfBounce = 4;
+    public List<Transform> enemyTarget;
+    private int targetIndex;
 
     private void Awake()
     {
@@ -53,18 +60,64 @@ public class Sword_Skill_Controller : MonoBehaviour
                 player.CatchTheSword();
             }
         }
+
+        if (isBouncing && enemyTarget.Count > 0)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, enemyTarget[targetIndex].position, bounceSpeed * Time.deltaTime);
+
+            if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < .1f)
+            {
+                targetIndex++;
+                amountOfBounce--;
+
+                if (amountOfBounce <= 0)
+                {
+                    isBouncing = false;
+                    isReturning = true;
+                }
+
+                if (targetIndex >= enemyTarget.Count)
+                {
+                    targetIndex = 0;
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        animator.SetBool("Rotation", false);
+        if (isReturning) return;
 
+        if (collision.GetComponent<Enemy>() != null)
+        {
+            if (isBouncing && enemyTarget.Count <= 0)
+            {
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
+
+                foreach (var hit in colliders)
+                {
+                    if (hit.GetComponent<Enemy>() != null)
+                    {
+                        enemyTarget.Add(hit.transform);
+                    }
+                }
+            }
+        }
+
+        StuckInfo(collision);
+    }
+
+    private void StuckInfo(Collider2D collision)
+    {
         canRotate = false;
         cd.enabled = false;
 
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
+        if (isBouncing && enemyTarget.Count > 0) return;
+
         transform.parent = collision.transform;
+        animator.SetBool("Rotation", false);
     }
 }
