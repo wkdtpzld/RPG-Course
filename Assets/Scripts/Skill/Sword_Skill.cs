@@ -1,8 +1,25 @@
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+
+public enum SwordType
+{
+    Regular,
+    Bounce,
+    Pierce,
+    Spin
+}
 
 public class Sword_Skill : Skill
 {
+    public SwordType swordType = SwordType.Regular;
+
+    [Header("Bounce info")]
+    [SerializeField] private int amountOfBounce;
+    [SerializeField] private float bounceGravity;
+
+    [Header("Peirce Info")]
+    [SerializeField] private int pierceAmount;
+    [SerializeField] private float pierceGravity;
+
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchDir;
@@ -22,6 +39,8 @@ public class Sword_Skill : Skill
         base.Start();
 
         GenerateDots();
+
+        SetUpGravity();
     }
 
     protected override void Update()
@@ -47,12 +66,34 @@ public class Sword_Skill : Skill
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         Sword_Skill_Controller newSwordScript = newSword.GetComponent<Sword_Skill_Controller>();
 
+        if (swordType == SwordType.Bounce)
+        {
+            newSwordScript.SetUpBounce(true, amountOfBounce);
+        }
+        else if (swordType == SwordType.Pierce)
+        {
+            newSwordScript.SetUpPierce(pierceAmount);
+        }
+
         newSwordScript.SetUpSword(finalDir, swordGravity, player);
         player.AssignNewSword(newSword);
 
         DotsActive(false);
     }
 
+    private void SetUpGravity()
+    {
+        if (swordType == SwordType.Pierce)
+        {
+            swordGravity = pierceGravity;
+        }
+        else if (swordType == SwordType.Bounce)
+        {
+            swordGravity = bounceGravity;
+        }
+    }
+
+    #region AimRegion
     public Vector2 AimDirection()
     {
         Vector2 playerPostion = player.transform.position;
@@ -88,4 +129,5 @@ public class Sword_Skill : Skill
 
         return position;
     }
+    #endregion
 }
