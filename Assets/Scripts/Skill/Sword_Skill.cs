@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Animations;
 
 public enum SwordType
 {
@@ -15,6 +16,7 @@ public class Sword_Skill : Skill
     [Header("Bounce info")]
     [SerializeField] private int amountOfBounce;
     [SerializeField] private float bounceGravity;
+    [SerializeField] private float bounceSpeed;
 
     [Header("Peirce Info")]
     [SerializeField] private int pierceAmount;
@@ -24,6 +26,12 @@ public class Sword_Skill : Skill
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchDir;
     [SerializeField] private float swordGravity;
+
+    [Header("Spin Info")]
+    [SerializeField] private float maxTravelDistance;
+    [SerializeField] private float spinDuration;
+    [SerializeField] private float spinGravity;
+    [SerializeField] private float hitCooldown;
 
     private Vector2 finalDir;
 
@@ -74,8 +82,12 @@ public class Sword_Skill : Skill
         {
             newSwordScript.SetUpPierce(pierceAmount);
         }
+        else if (swordType == SwordType.Spin)
+        {
+            newSwordScript.SetUpSpin(true, maxTravelDistance, spinDuration, hitCooldown);
+        }
 
-        newSwordScript.SetUpSword(finalDir, swordGravity, player);
+        newSwordScript.SetUpSword(finalDir, swordGravity, player, swordType);
         player.AssignNewSword(newSword);
 
         DotsActive(false);
@@ -90,6 +102,10 @@ public class Sword_Skill : Skill
         else if (swordType == SwordType.Bounce)
         {
             swordGravity = bounceGravity;
+        }
+        else if (swordType == SwordType.Spin)
+        {
+            swordGravity = spinGravity;
         }
     }
 

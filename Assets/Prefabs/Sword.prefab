@@ -76,6 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bounceSpeed: 18
   pierceAmount: 0
+  hitTimer: 1
   returnSpeed: 36
 --- !u!58 &1516690253815889406
 CircleCollider2D:
