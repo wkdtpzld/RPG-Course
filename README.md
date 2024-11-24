@@ -1,6 +1,9 @@
-# RPG-Course
-
 ## 목차
+
+개선 사항.
+1. 검 던지기 기능 리팩토링.
+
+주 학습내용.
 
 1. FSM 패턴
 2. Sub-state Machine
@@ -222,3 +225,102 @@ public class PlayerManager : MonoBehaviour
 }
 
 ```
+
+
+## 개선사항 1. 검 던지기 기능 리팩토링
+
+```c#
+    void Update()
+    {
+        ...
+        if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < .1f)
+        {
+            targetIndex++;
+            amountOfBounce--;
+
+            if (amountOfBounce <= 0)
+            {
+                isBouncing = false;
+                isReturning = true;
+            }
+
+            if (targetIndex >= enemyTarget.Count)
+            {
+                targetIndex = 0;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ...
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
+    }
+    
+```
+
+colliders 를 리스트형으로 가져올 수 있는 함수이다.
+
+여기서 타입 <Enemy> 라는 타입을 특정하여 기존의 List 에 Add 를 하여 사용하면 쉽게 필터링이 가능했다.
+
+다만 여기서 조금의 의문점이 들었다.
+
+1. OverlapCircleAll 로 모든 오브젝트를 읽는다면 만약 수많은 오브젝트가 있다면 이 코드는 과연 효율적인가?
+2. if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < .1f) 의 targetIndex 의 기본값은 0 이지만. 시작부분의 Index 가 0 이라면 어떻게 할 것인지? OverlapCircleAll 의 리스트 정렬 방식은 어떻게 되어있는지?
+
+
+### 해결방안 및 과정
+
+1. 기존의 코드로 Debug.Log(count) 를 실시했을 때 몇 가지의 오브젝트 수가 감지되었을까?
+
+```c#
+Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10);
+
+Debug.Log(colliders.Length); // 5개 ~ 4개
+```
+
+지금은 괜찮지만 오브젝트 수가 많아지면 조금 비효율적일 것 같기도 하고.. 뭔가 이래도 상관이 없을것 같기도 한데.. 만약에 다른 방식으로 한다면 어떻게 하면 좋을까? 싶어서 구현한 코드이다.
+
+
+```c#
+    ContactFilter2D filter = new ContactFilter2D();
+    filter.SetLayerMask(LayerMask.GetMask("Enemy"));
+
+    Collider2D[] colliders = new Collider2D[10];
+    cd.radius = 10;
+    int count = cd.Overlap(filter, colliders);
+
+    for (int i = 0; i < count; i++)
+    {
+        if (colliders[i].GetComponent<Enemy>() != null)
+        {
+            enemyTarget.Add(colliders[i].transform);
+        }
+    }
+```
+
+filter.SetLayerMask(LayerMask.GetMask("Enemy")); <- 레이어 마스크를 기준으로 필터를 걸어서 최대 10개의 적을 캐치할 수 있도록 하였고, count 수 만큼의 적을 enemyTarget 에 추가하였다.
+
+
+2. [targetIndex] OverlapCircleAll 의 정렬 기준은 무엇인가?
+
+OverlapCircleAll 는 Z축을 기반으로 리스트의 정렬을 정한다.
+
+그러므로 따로 Sort 함수를 만들어 정렬을 해줘야 하므로 다음과 같은 코드를 추가하였다.
+
+```c#
+    enemyTarget.Sort((a, b) =>
+        {
+            float distanceA = Vector2.Distance(transform.position, a.position);
+            float distanceB = Vector2.Distance(transform.position, b.position);
+            return distanceB.CompareTo(distanceA);
+        });
+```
+
+늘 보던 익숙한 그 Sort 함수를 추가.
+
+### 결과물
+
+
+https://github.com/user-attachments/assets/4db9ec18-4a08-49e9-bdc3-a4e26959f9c4
+
