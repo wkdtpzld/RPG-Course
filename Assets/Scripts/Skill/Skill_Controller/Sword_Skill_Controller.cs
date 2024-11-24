@@ -21,6 +21,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     private bool isSpinning;
     public float hitTimer;
     private float hitCooldown;
+    private float spinDirection;
 
     [Header("Sword State")]
     private SwordType swordType;
@@ -51,6 +52,8 @@ public class Sword_Skill_Controller : MonoBehaviour
 
         if (pierceAmount <= 0)
             animator.SetBool("Rotation", true);
+
+        spinDirection = Mathf.Clamp(rb.linearVelocity.x, -1, 1);
     }
 
     public void SetUpBounce(bool _isBouncing, int _amountOfBounce)
@@ -127,6 +130,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     private void SpinAttack()
     {
         spinTimer -= Time.deltaTime;
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(transform.position.x + spinDirection, transform.position.y), 1.5f * Time.deltaTime);
 
         if (spinTimer < 0)
         {
