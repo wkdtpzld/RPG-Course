@@ -74,9 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd318a3ceac04541ab22bfaef195097, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bounceSpeed: 18
-  pierceAmount: 0
-  hitTimer: 1
+  spinTimer: 0
+  hitTimer: 0
   returnSpeed: 36
 --- !u!58 &1516690253815889406
 CircleCollider2D:

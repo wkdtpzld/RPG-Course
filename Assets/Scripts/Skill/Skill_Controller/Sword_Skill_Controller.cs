@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Sword_Skill_Controller : MonoBehaviour
@@ -7,7 +9,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     private float bounceSpeed;
     private bool isBouncing;
     private int bounceAmount;
-    private List<Transform> enemyTarget;
+    public List<Transform> enemyTarget;
     private int targetIndex;
 
     [Header("Pierce Info")]
@@ -27,7 +29,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     private SwordType swordType;
 
     [Space]
-    [SerializeField] private float returnSpeed;
+    private float returnSpeed;
     private Animator animator;
     private Rigidbody2D rb;
     private CircleCollider2D cd;
@@ -36,6 +38,8 @@ public class Sword_Skill_Controller : MonoBehaviour
     private bool canRotate = true;
     private bool isReturning;
 
+    private float freezeTimeDuration;
+
     private void Awake()
     {
         animator = GetComponentInChildren<Animator>();
@@ -43,23 +47,39 @@ public class Sword_Skill_Controller : MonoBehaviour
         cd = GetComponent<CircleCollider2D>();
     }
 
-    public void SetUpSword(Vector2 _dir, float _gravityScale, Player _player, SwordType _swordType)
+    private void DestoryMe()
+    {
+        Destroy(gameObject);
+    }
+
+    private IEnumerator DestoryDelay(float _delay)
+    {
+        yield return new WaitForSeconds(_delay);
+        DestoryMe();
+    }
+
+    public void SetUpSword(Vector2 _dir, float _gravityScale, Player _player, SwordType _swordType, float _freezeTimeDuration, float _returnSpeed)
     {
         player = _player;
         rb.linearVelocity = _dir;
         rb.gravityScale = _gravityScale;
         swordType = _swordType;
+        freezeTimeDuration = _freezeTimeDuration;
+        returnSpeed = _returnSpeed;
 
         if (pierceAmount <= 0)
             animator.SetBool("Rotation", true);
 
         spinDirection = Mathf.Clamp(rb.linearVelocity.x, -1, 1);
+
+        StartCoroutine(DestoryDelay(7));
     }
 
-    public void SetUpBounce(bool _isBouncing, int _amountOfBounce)
+    public void SetUpBounce(bool _isBouncing, int _amountOfBounce, float _bounceSpeed)
     {
         isBouncing = _isBouncing;
         bounceAmount = _amountOfBounce;
+        bounceSpeed = _bounceSpeed;
 
         enemyTarget = new List<Transform>();
     }
@@ -139,6 +159,7 @@ public class Sword_Skill_Controller : MonoBehaviour
         }
 
         hitTimer -= Time.deltaTime;
+
         if (hitTimer < 0)
         {
             hitTimer = hitCooldown;
@@ -149,7 +170,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             {
                 if (hit.GetComponent<Enemy>() != null)
                 {
-                    hit.GetComponent<Enemy>().Damage();
+                    SwordSkillDamage(hit.GetComponent<Enemy>());
                 }
             }
         }
@@ -173,7 +194,9 @@ public class Sword_Skill_Controller : MonoBehaviour
 
         if (Vector2.Distance(transform.position, enemyTarget[targetIndex].position) < .1f)
         {
-            enemyTarget[targetIndex].GetComponent<Enemy>()?.Damage();
+            Enemy enemy = enemyTarget[targetIndex].GetComponent<Enemy>();
+            SwordSkillDamage(enemy);
+
             targetIndex++;
             bounceAmount--;
 
@@ -217,12 +240,23 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void StuckInfo(Collider2D collision)
     {
-        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        if (collision.GetComponent<Enemy>() != null)
         {
-            collision.GetComponent<Enemy>()?.Damage();
-            pierceAmount--;
-            return;
+            Enemy enemy = collision.GetComponent<Enemy>();
+
+            if ((swordType == SwordType.Regular || swordType == SwordType.Pierce) && pierceAmount <= 0)
+            {
+                SwordSkillDamage(enemy);
+            }
+
+            if (swordType == SwordType.Pierce && pierceAmount > 0)
+            {
+                SwordSkillDamage(enemy);
+                pierceAmount--;
+                return;
+            }
         }
+
         if (isSpinning)
         {
             if (!wasStopped)
@@ -231,14 +265,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             }
             return;
         }
-        if (collision.GetComponent<Enemy>() != null)
-        {
-            if (swordType == SwordType.Regular || swordType == SwordType.Pierce)
-            {
-                Debug.Log("Damage");
-                collision.GetComponent<Enemy>()?.Damage();
-            }
-        }
+
         cd.enabled = false;
         canRotate = false;
 
@@ -249,6 +276,12 @@ public class Sword_Skill_Controller : MonoBehaviour
 
         transform.parent = collision.transform;
         animator.SetBool("Rotation", false);
+    }
+
+    private void SwordSkillDamage(Enemy _enemy)
+    {
+        _enemy.Damage();
+        _enemy.StartCoroutine(_enemy.FreezeTimerFor(freezeTimeDuration));
     }
 
     private void StopSpinning()

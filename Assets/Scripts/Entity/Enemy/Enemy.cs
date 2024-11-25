@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class Enemy : Entity
     public float idleTime;
     public float battleTime;
     public float detectDistance;
+    private float defaultMoveSpeed;
 
     [Header("Attack Info")]
     public float attackDistance;
@@ -29,6 +31,8 @@ public class Enemy : Entity
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
+
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Start()
@@ -41,8 +45,34 @@ public class Enemy : Entity
         base.Update();
         stateMachine.currentState.Update();
     }
+
+
+    public virtual void FreezeTimer(bool _timeFrozen)
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0;
+            animator.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed;
+            animator.speed = 1;
+        }
+    }
+
+    public virtual IEnumerator FreezeTimerFor(float _seconds)
+    {
+        FreezeTimer(true);
+
+        yield return new WaitForSeconds(_seconds);
+
+        FreezeTimer(false);
+    }
+
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir, 50, whatIsPlayer);
 
+    #region Counter Attack
     public virtual void OpenCounterAttackWindow()
     {
         canBeStunned = true;
@@ -64,6 +94,7 @@ public class Enemy : Entity
         }
         return false;
     }
+    #endregion
 
     protected override void OnDrawGizmos()
     {
