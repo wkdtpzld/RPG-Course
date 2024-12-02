@@ -12,7 +12,7 @@ public class PlayerDashState : PlayerState
 
         stateTimer = player.dashDuration;
         rb.gravityScale = 0;
-        player.skill.clone.CreateClone(player.transform);
+        player.skill.clone.CreateClone(player.transform, Vector2.zero);
     }
 
     public override void Update()

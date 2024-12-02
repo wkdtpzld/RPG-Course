@@ -33,6 +33,7 @@ public class Player : Entity
     public PlayerCounterAttackState counterAttack { get; private set; }
     public PlayerAimSwordState aimSowrd { get; private set; }
     public PlayerCatchSwordState catchSword { get; private set; }
+    public PlayerBlackholeState blackhole { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -51,6 +52,7 @@ public class Player : Entity
         counterAttack = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
         aimSowrd = new PlayerAimSwordState(this, stateMachine, "AimSword");
         catchSword = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+        blackhole = new PlayerBlackholeState(this, stateMachine, "Jump");
     }
 
     protected override void Start()
