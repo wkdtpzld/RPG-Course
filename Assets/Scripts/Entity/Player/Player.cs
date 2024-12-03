@@ -70,7 +70,7 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.F))
         {
-            skill.crystal.UseSkill();
+            skill.crystal.CanUseSkill();
         }
     }
 
