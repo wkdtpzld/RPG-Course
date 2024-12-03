@@ -18,7 +18,8 @@ public class Clone_Skill : Skill
             cloneDuration,
             colorLoosingSpeed,
             canAttack,
-            _offset
+            _offset,
+            FindClosestEnemy(newClone.transform)
         );
     }
 }

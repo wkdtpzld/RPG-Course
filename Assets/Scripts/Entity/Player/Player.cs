@@ -67,6 +67,11 @@ public class Player : Entity
         base.Update();
         stateMachine.currentState.Update();
         ChekcForDashInput();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            skill.crystal.UseSkill();
+        }
     }
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
