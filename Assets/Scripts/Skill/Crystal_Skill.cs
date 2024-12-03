@@ -7,6 +7,9 @@ public class Crystal_Skill : Skill
     [SerializeField] private GameObject crystalPrefab;
     private GameObject currentCrystal;
 
+    [Header("Crystal mirage")]
+    [SerializeField] private bool cloneInsteadOfCrystal;
+
     [Header("Moving Crystal")]
     [SerializeField] private bool canMoveToEnemy;
     [SerializeField] private float moveSpped;
@@ -38,10 +41,20 @@ public class Crystal_Skill : Skill
         else
         {
             if (canMoveToEnemy) return;
-            player.transform.position = currentCrystal.transform.position;
 
-            currentCrystal.transform.position = player.transform.position;
-            currentCrystal.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
+            Vector2 playerPos = player.transform.position;
+            player.transform.position = currentCrystal.transform.position;
+            currentCrystal.transform.position = playerPos;
+
+            if (cloneInsteadOfCrystal)
+            {
+                SkillManager.instance.clone.CreateClone(currentCrystal.transform, Vector3.zero);
+                Destroy(currentCrystal);
+            }
+            else
+            {
+                currentCrystal.GetComponent<Crystal_Skill_Controller>()?.FinishCrystal();
+            }
         }
     }
 
