@@ -156,4 +156,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackCheck: {fileID: 8878726062245045093}
-  attackCheckRadius: 0.2
+  attackCheckRadius: 1.07

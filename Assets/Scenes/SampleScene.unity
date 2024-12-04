@@ -1712,6 +1712,63 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1001 &421492429
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.5860167
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.4252462
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2810181397932036096, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+      propertyPath: m_Name
+      value: Crystal
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
 --- !u!1 &453593199
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,6 +2792,7 @@ GameObject:
   - component: {fileID: 979451147}
   - component: {fileID: 979451148}
   - component: {fileID: 979451149}
+  - component: {fileID: 979451150}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -2799,6 +2857,9 @@ MonoBehaviour:
   cloneDuration: 1
   colorLoosingSpeed: 1.5
   canAttack: 1
+  createCloneOnDashStart: 0
+  createCloneOnDashOver: 0
+  canCreateCloneOnCounterAttack: 0
 --- !u!114 &979451148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2851,6 +2912,33 @@ MonoBehaviour:
   growSpeed: 3
   shrinkSpeed: 6
   maxSize: 15
+--- !u!114 &979451150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 979451143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c5e5779a09241b39a062a595c64313, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 4
+  crystalDuration: 1.5
+  crystalPrefab: {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+  cloneInsteadOfCrystal: 1
+  canMoveToEnemy: 0
+  moveSpped: 10
+  canExplode: 0
+  canUseMultiStacks: 0
+  amountOfStacks: 0
+  multiStackCooldown: 2
+  useTimeWindow: 2.5
+  crystalLeft:
+  - {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+  - {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
+  - {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
 --- !u!1 &1061803026
 GameObject:
   m_ObjectHideFlags: 0
@@ -5736,3 +5824,4 @@ SceneRoots:
   - {fileID: 1195658858}
   - {fileID: 811682696}
   - {fileID: 1620289938}
+  - {fileID: 421492429}

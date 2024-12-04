@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Clone_Skill_Controller : MonoBehaviour
@@ -9,6 +10,9 @@ public class Clone_Skill_Controller : MonoBehaviour
     [SerializeField] private Transform attackCheck;
     [SerializeField] private float attackCheckRadius = 0.2f;
     private Transform closestEnemy;
+    private bool canDuplicateClone;
+    private float chanceToDuplicate;
+    private int facingDir = 1;
 
     private void Awake()
     {
@@ -31,7 +35,7 @@ public class Clone_Skill_Controller : MonoBehaviour
         }
     }
 
-    public void SetupClone(Transform _newTransform, float _cloneDuration, float _colorLoosingSpeed, bool _canAttack, Vector3 _offset, Transform _closestEnemy)
+    public void SetupClone(Transform _newTransform, float _cloneDuration, float _colorLoosingSpeed, bool _canAttack, Vector3 _offset, Transform _closestEnemy, bool _canDuplicateClone, float _chanceToDuplicate)
     {
         if (_canAttack)
         {
@@ -41,6 +45,8 @@ public class Clone_Skill_Controller : MonoBehaviour
         cloneTimer = _cloneDuration;
         colorLoosingSpeed = _colorLoosingSpeed;
         closestEnemy = _closestEnemy;
+        canDuplicateClone = _canDuplicateClone;
+        chanceToDuplicate = _chanceToDuplicate;
 
         FaceClosestTarget();
     }
@@ -59,6 +65,17 @@ public class Clone_Skill_Controller : MonoBehaviour
             if (hit.GetComponent<Enemy>() != null)
             {
                 hit.GetComponent<Enemy>().Damage();
+
+                if (canDuplicateClone)
+                {
+                    if (canDuplicateClone)
+                    {
+                        if (Random.Range(0, 100) < chanceToDuplicate)
+                        {
+                            SkillManager.instance.clone.CreateClone(hit.transform, new Vector3(0.5f * facingDir, 0));
+                        }
+                    }
+                }
             }
         }
     }
@@ -69,6 +86,7 @@ public class Clone_Skill_Controller : MonoBehaviour
         {
             if (transform.position.x > closestEnemy.position.x)
             {
+                facingDir *= -1;
                 transform.Rotate(0, 180, 0);
             }
         }
