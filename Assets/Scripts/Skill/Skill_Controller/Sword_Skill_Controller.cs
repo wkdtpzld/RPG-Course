@@ -280,7 +280,7 @@ public class Sword_Skill_Controller : MonoBehaviour
 
     private void SwordSkillDamage(Enemy _enemy)
     {
-        _enemy.Damage();
+        _enemy.DamageEffect();
         _enemy.StartCoroutine(_enemy.FreezeTimerFor(freezeTimeDuration));
     }
 

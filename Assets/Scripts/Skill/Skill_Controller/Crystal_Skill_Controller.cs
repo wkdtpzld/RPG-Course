@@ -35,12 +35,14 @@ public class Crystal_Skill_Controller : MonoBehaviour
 
         if (canMove)
         {
-            transform.position = Vector2.MoveTowards(transform.position, closestEnemy.position, moveSpped * Time.deltaTime);
-
-            if (Vector2.Distance(transform.position, closestEnemy.position) < 1)
+            if (closestEnemy)
             {
-                FinishCrystal();
-                canMove = false;
+                transform.position = Vector2.MoveTowards(transform.position, closestEnemy.position, moveSpped * Time.deltaTime);
+                if (Vector2.Distance(transform.position, closestEnemy.position) < 1)
+                {
+                    FinishCrystal();
+                    canMove = false;
+                }
             }
         }
 
@@ -73,7 +75,7 @@ public class Crystal_Skill_Controller : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().Damage();
+                hit.GetComponent<Enemy>().DamageEffect();
             }
         }
     }
