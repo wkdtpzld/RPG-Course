@@ -373,6 +373,7 @@ GameObject:
   - component: {fileID: 199602546}
   - component: {fileID: 199602545}
   - component: {fileID: 199602549}
+  - component: {fileID: 199602550}
   m_Layer: 7
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -524,6 +525,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: a6feb8b693abe491fb991425efa457ca, type: 2}
   flashDuration: 0.1
+--- !u!114 &199602550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199602544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e93ecbff8008442c8da0d3f63e788bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 500
+    modifiers: 
+  strength:
+    baseValue: 0
+    modifiers: 
+  currentHealth: 0
 --- !u!1 &209984633
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +560,7 @@ GameObject:
   - component: {fileID: 209984637}
   - component: {fileID: 209984636}
   - component: {fileID: 209984635}
+  - component: {fileID: 209984639}
   m_Layer: 7
   m_Name: Enemy_Skeleton (1)
   m_TagString: Untagged
@@ -688,6 +712,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &209984639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209984633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e93ecbff8008442c8da0d3f63e788bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 0
+    modifiers: 
+  maxHealth:
+    baseValue: 0
+    modifiers: 
+  strength:
+    baseValue: 0
+    modifiers: 
+  currentHealth: 0
 --- !u!1 &236053571
 GameObject:
   m_ObjectHideFlags: 0
@@ -732,6 +778,7 @@ GameObject:
   - component: {fileID: 240559018}
   - component: {fileID: 240559017}
   - component: {fileID: 240559016}
+  - component: {fileID: 240559019}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -870,6 +917,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitMat: {fileID: 2100000, guid: a6feb8b693abe491fb991425efa457ca, type: 2}
   flashDuration: 0.2
+--- !u!114 &240559019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240559013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaefeac22dd154c22b00d20b3cf07b8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage:
+    baseValue: 5
+    modifiers: 
+  maxHealth:
+    baseValue: 500
+    modifiers: 
+  strength:
+    baseValue: 0
+    modifiers: 
+  currentHealth: 0
 --- !u!1 &251432834
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,9 +2926,12 @@ MonoBehaviour:
   cloneDuration: 1
   colorLoosingSpeed: 1.5
   canAttack: 1
-  createCloneOnDashStart: 0
-  createCloneOnDashOver: 0
-  canCreateCloneOnCounterAttack: 0
+  createCloneOnDashStart: 1
+  createCloneOnDashOver: 1
+  canCreateCloneOnCounterAttack: 1
+  canDuplicateClone: 1
+  chanceToDuplicate: 0
+  crystalInsteadOfClone: 1
 --- !u!114 &979451148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2906,7 +2978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0.3
   cloneCooldown: 0.35
-  amountOfAttacks: 1
+  amountOfAttacks: 15
   blackholeDuration: 4
   blackHolePrefab: {fileID: 2799185948997464752, guid: bf9caefb7d97443db9eb5e84fcdfc272, type: 3}
   growSpeed: 3
@@ -2928,9 +3000,9 @@ MonoBehaviour:
   crystalDuration: 1.5
   crystalPrefab: {fileID: 7493763916278126323, guid: dc0f77f026da54770b96eb99a9aa2b56, type: 3}
   cloneInsteadOfCrystal: 1
-  canMoveToEnemy: 0
+  canMoveToEnemy: 1
   moveSpped: 10
-  canExplode: 0
+  canExplode: 1
   canUseMultiStacks: 0
   amountOfStacks: 0
   multiStackCooldown: 2

@@ -6,6 +6,8 @@ public class Enemy : Entity
 {
     [SerializeField] protected LayerMask whatIsPlayer;
     public EnemyStateMachine stateMachine { get; private set; }
+    public string lastAnimBoolName { get; private set; }
+    public BoxCollider2D cd { get; private set; }
 
     [Header("Stunned Info")]
     public float stunDuration;
@@ -38,6 +40,8 @@ public class Enemy : Entity
     protected override void Start()
     {
         base.Start();
+
+        cd = GetComponent<BoxCollider2D>();
     }
 
     protected override void Update()
@@ -104,4 +108,9 @@ public class Enemy : Entity
     }
 
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationTrigger();
+
+    public virtual void AssignLastAnimName(string _animBoolName)
+    {
+        lastAnimBoolName = _animBoolName;
+    }
 }

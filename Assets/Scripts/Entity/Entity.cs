@@ -124,4 +124,9 @@ public class Entity : MonoBehaviour
             sr.color = Color.white;
         }
     }
+
+    public virtual void Die()
+    {
+
+    }
 }

@@ -16,4 +16,10 @@ public class EnemyStatus : CharacterStatus
 
         enemy.DamageEffect();
     }
+
+    protected override void Die()
+    {
+        base.Die();
+        enemy.Die();
+    }
 }
