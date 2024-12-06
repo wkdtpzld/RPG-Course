@@ -537,14 +537,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e93ecbff8008442c8da0d3f63e788bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
+  strength:
+    baseValue: 0
+    modifiers: 
+  agility:
+    baseValue: 0
+    modifiers: 
+  intelligence:
+    baseValue: 0
+    modifiers: 
+  vitality:
     baseValue: 0
     modifiers: 
   maxHealth:
     baseValue: 500
     modifiers: 
-  strength:
+  armor:
     baseValue: 0
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
+  damage:
+    baseValue: 10
     modifiers: 
   currentHealth: 0
 --- !u!1 &209984633
@@ -724,14 +739,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e93ecbff8008442c8da0d3f63e788bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
+  strength:
+    baseValue: 0
+    modifiers: 
+  agility:
+    baseValue: 0
+    modifiers: 
+  intelligence:
+    baseValue: 0
+    modifiers: 
+  vitality:
     baseValue: 0
     modifiers: 
   maxHealth:
+    baseValue: 500
+    modifiers: 
+  armor:
     baseValue: 0
     modifiers: 
-  strength:
+  evasion:
     baseValue: 0
+    modifiers: 
+  damage:
+    baseValue: 10
     modifiers: 
   currentHealth: 0
 --- !u!1 &236053571
@@ -929,14 +959,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaefeac22dd154c22b00d20b3cf07b8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage:
-    baseValue: 5
+  strength:
+    baseValue: 10
+    modifiers: 1c02c502
+  agility:
+    baseValue: 0
+    modifiers: 
+  intelligence:
+    baseValue: 0
+    modifiers: 14000000
+  vitality:
+    baseValue: 0
     modifiers: 
   maxHealth:
-    baseValue: 500
+    baseValue: 100
     modifiers: 
-  strength:
+  armor:
     baseValue: 0
+    modifiers: 
+  evasion:
+    baseValue: 0
+    modifiers: 
+  damage:
+    baseValue: 5
     modifiers: 
   currentHealth: 0
 --- !u!1 &251432834
