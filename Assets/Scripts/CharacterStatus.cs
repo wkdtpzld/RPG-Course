@@ -38,6 +38,8 @@ public class CharacterStatus : MonoBehaviour
     private float igniteDamageCooldown = .3f;
     private float igniteDamageTimer;
     private int igniteDamage;
+    [SerializeField] private GameObject shockStrikePrefab;
+    private int shockDamage;
 
     public int currentHealth;
 
@@ -153,6 +155,11 @@ public class CharacterStatus : MonoBehaviour
             _targetStatus.SetUpIgniteDamage(Mathf.RoundToInt(_fireDamage * .2f));
         }
 
+        if (canApplyShock)
+        {
+            _targetStatus.SetupShockStrikeDamage(Mathf.RoundToInt(_lightDamage * .1f));
+        }
+
         _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
     }
 
@@ -233,9 +240,11 @@ public class CharacterStatus : MonoBehaviour
 
     public void ApplyAilments(bool _ignite, bool _chill, bool _shock)
     {
-        if (isIgnited || isChilled || isShocked) return;
+        bool canApplyIgnite = !isIgnited && !isChilled && !isShocked;
+        bool canApplyChill = !isIgnited && !isChilled && !isShocked;
+        bool canApplyShock = !isIgnited && !isChilled;
 
-        if (_ignite)
+        if (_ignite && canApplyIgnite)
         {
             isIgnited = _ignite;
             ignitedTimer = ailmentsDuration;
@@ -243,7 +252,7 @@ public class CharacterStatus : MonoBehaviour
             fx.InvokeIgniteFx(ailmentsDuration);
         }
 
-        if (_chill)
+        if (_chill && canApplyChill)
         {
             chilledTimer = ailmentsDuration;
             isChilled = _chill;
@@ -252,12 +261,17 @@ public class CharacterStatus : MonoBehaviour
             GetComponent<Entity>().SlowEntityBy(slowPercentage, ailmentsDuration);
             fx.InvokeChillFx(ailmentsDuration);
         }
-        if (_shock)
+        if (_shock && canApplyShock)
         {
-            shockedTimer = ailmentsDuration;
-            isShocked = _shock;
-
-            fx.InvokeShockFx(ailmentsDuration);
+            if (!isShocked)
+            {
+                ApplyShock(_shock);
+            }
+            else
+            {
+                if (GetComponent<Player>() != null) return;
+                HitNearestTargetWithShockStrike();
+            }
         }
 
         isIgnited = _ignite;
@@ -266,6 +280,8 @@ public class CharacterStatus : MonoBehaviour
     }
 
     public void SetUpIgniteDamage(int _damage) => igniteDamage = _damage;
+
+    public void SetupShockStrikeDamage(int _damage) => shockDamage = _damage;
 
     private int CheckTargetResistance(CharacterStatus _targetStatus, int totalMagicalDamage)
     {
@@ -278,5 +294,48 @@ public class CharacterStatus : MonoBehaviour
     public int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + vitality.GetValue() * 5;
+    }
+
+    public void ApplyShock(bool _shock)
+    {
+        if (isShocked) return;
+
+        shockedTimer = ailmentsDuration;
+        isShocked = _shock;
+
+        fx.InvokeShockFx(ailmentsDuration);
+    }
+
+    private void HitNearestTargetWithShockStrike()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 25);
+
+        float closestDistance = Mathf.Infinity;
+        Transform closestEnemy = null;
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null && Vector2.Distance(transform.position, hit.transform.position) > 2)
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
+
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = hit.transform;
+                }
+            }
+
+            if (closestEnemy == null)
+            {
+                closestEnemy = transform;
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);
+            newShockStrike.GetComponent<ThunderStrike_Controller>().SetUp(shockDamage, closestEnemy.GetComponent<CharacterStatus>());
+        }
     }
 }
