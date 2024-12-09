@@ -33,6 +33,6 @@ public class SkeletonStunnedState : EnemyState
     {
         base.Exit();
 
-        enemy.fx.StopBlink();
+        enemy.fx.CancelColorChange();
     }
 }

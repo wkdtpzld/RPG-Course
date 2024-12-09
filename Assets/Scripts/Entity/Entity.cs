@@ -29,6 +29,8 @@ public class Entity : MonoBehaviour
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
 
+    public System.Action onFliped;
+
 
     #region Collision
 
@@ -49,6 +51,9 @@ public class Entity : MonoBehaviour
         facingDir = facingDir * -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+
+        if (onFliped != null)
+            onFliped();
     }
 
     public void FlipController(float _x)
@@ -128,5 +133,15 @@ public class Entity : MonoBehaviour
     public virtual void Die()
     {
 
+    }
+
+    public virtual void SlowEntityBy(float _slowPercentage, float _slowDuration)
+    {
+
+    }
+
+    protected virtual void ReturnDefaultSpeed()
+    {
+        animator.speed = 1;
     }
 }

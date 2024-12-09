@@ -558,9 +558,30 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  critChance:
+    baseValue: 90
+    modifiers: 
   damage:
     baseValue: 10
     modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
+  magicResistance:
+    baseValue: 0
+    modifiers: 
+  fireDamge:
+    baseValue: 5
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  lightingDamage:
+    baseValue: 0
+    modifiers: 
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHealth: 0
 --- !u!1 &209984633
 GameObject:
@@ -760,9 +781,30 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
   damage:
     baseValue: 10
     modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
+  magicResistance:
+    baseValue: 0
+    modifiers: 
+  fireDamge:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  lightingDamage:
+    baseValue: 0
+    modifiers: 
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHealth: 0
 --- !u!1 &236053571
 GameObject:
@@ -980,9 +1022,30 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
   damage:
     baseValue: 5
     modifiers: 
+  critPower:
+    baseValue: 0
+    modifiers: 
+  magicResistance:
+    baseValue: 1
+    modifiers: 
+  fireDamge:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  lightingDamage:
+    baseValue: 0
+    modifiers: 
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
   currentHealth: 0
 --- !u!1 &251432834
 GameObject:
