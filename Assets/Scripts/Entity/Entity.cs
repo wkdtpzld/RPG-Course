@@ -103,7 +103,6 @@ public class Entity : MonoBehaviour
 
     public virtual void DamageEffect()
     {
-        fx.StartCoroutine(fx.FlashFX());
         StartCoroutine(HitKnockback());
     }
 
@@ -116,18 +115,6 @@ public class Entity : MonoBehaviour
         yield return new WaitForSeconds(knockbackDuration);
 
         isKnocked = false;
-    }
-
-    public void MakeTransprent(bool _transprent)
-    {
-        if (_transprent)
-        {
-            sr.color = Color.clear;
-        }
-        else
-        {
-            sr.color = Color.white;
-        }
     }
 
     public virtual void Die()

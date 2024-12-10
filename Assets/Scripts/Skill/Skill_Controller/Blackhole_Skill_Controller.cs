@@ -169,7 +169,7 @@ public class Blackhole_Skill_Controller : MonoBehaviour
         if (playerCanHidden)
         {
             playerCanHidden = false;
-            PlayerManager.instance.player.MakeTransprent(true);
+            PlayerManager.instance.player.fx.MakeTransprent(true);
         }
     }
 

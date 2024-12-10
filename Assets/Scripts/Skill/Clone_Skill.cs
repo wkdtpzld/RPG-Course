@@ -39,7 +39,8 @@ public class Clone_Skill : Skill
             _offset,
             FindClosestEnemy(newClone.transform),
             canDuplicateClone,
-            chanceToDuplicate
+            chanceToDuplicate,
+            player
         );
     }
 

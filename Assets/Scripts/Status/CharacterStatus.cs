@@ -44,6 +44,7 @@ public class CharacterStatus : MonoBehaviour
     public int currentHealth;
 
     public System.Action onHealthChanged;
+    protected bool isDead;
 
     protected virtual void Start()
     {
@@ -79,10 +80,8 @@ public class CharacterStatus : MonoBehaviour
 
         if (igniteDamageTimer < 0 && isIgnited)
         {
-            Debug.Log("Take burn Damage" + igniteDamage);
-
             DecreasehealthBy(igniteDamage);
-            if (currentHealth < 0)
+            if (currentHealth < 0 && !isDead)
             {
                 Die();
             }
@@ -103,9 +102,9 @@ public class CharacterStatus : MonoBehaviour
         }
 
         totalDamage = CheckTargetArmor(_targetStatus, totalDamage);
-        // _targetStatus.TakeDamage(totalDamage);
+        _targetStatus.TakeDamage(totalDamage);
 
-        DoMagicalDamage(_targetStatus);
+        // DoMagicalDamage(_targetStatus);
     }
 
     public virtual void DoMagicalDamage(CharacterStatus _targetStatus)
@@ -120,54 +119,17 @@ public class CharacterStatus : MonoBehaviour
 
         _targetStatus.TakeDamage(totalMagicalDamage);
 
-        bool canApplyIgnite = _fireDamage > _iceDamage && _fireDamage > _lightDamage;
-        bool canApplyChill = _iceDamage > _fireDamage && _iceDamage > _lightDamage;
-        bool canApplyShock = _lightDamage > _iceDamage && _lightDamage > _fireDamage;
-
-        if (Mathf.Max(_fireDamage, _iceDamage, _lightDamage) <= 0) return;
-
-        while (!canApplyIgnite && !canApplyChill && !canApplyShock)
-        {
-            if (Random.value < .5f && _fireDamage > 0)
-            {
-                canApplyIgnite = true;
-                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
-                return;
-            }
-
-            if (Random.value < .5f && _iceDamage > 0)
-            {
-                canApplyChill = true;
-                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
-                return;
-            }
-
-            if (Random.value < .5f && _lightDamage > 0)
-            {
-                canApplyShock = true;
-                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
-                return;
-            }
-        }
-
-        if (canApplyIgnite)
-        {
-            _targetStatus.SetUpIgniteDamage(Mathf.RoundToInt(_fireDamage * .2f));
-        }
-
-        if (canApplyShock)
-        {
-            _targetStatus.SetupShockStrikeDamage(Mathf.RoundToInt(_lightDamage * .1f));
-        }
-
-        _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
+        AttemptyToApplyAilment(_targetStatus, _fireDamage, _iceDamage, _lightDamage);
     }
 
     public virtual void TakeDamage(int _damage)
     {
         DecreasehealthBy(_damage);
 
-        if (currentHealth < 0)
+        GetComponent<Entity>().DamageEffect();
+        fx.StartCoroutine(fx.FlashFX());
+
+        if (currentHealth < 0 && !isDead)
         {
             Die();
         }
@@ -183,7 +145,7 @@ public class CharacterStatus : MonoBehaviour
 
     protected virtual void Die()
     {
-        // throw new NotImplementedException();
+        isDead = true;
     }
 
     private bool CanAvoidAttack(CharacterStatus _targetStatus)
@@ -337,5 +299,50 @@ public class CharacterStatus : MonoBehaviour
             GameObject newShockStrike = Instantiate(shockStrikePrefab, transform.position, Quaternion.identity);
             newShockStrike.GetComponent<ThunderStrike_Controller>().SetUp(shockDamage, closestEnemy.GetComponent<CharacterStatus>());
         }
+    }
+
+    public void AttemptyToApplyAilment(CharacterStatus _targetStatus, int _fireDamage, int _iceDamage, int _lightDamage)
+    {
+        bool canApplyIgnite = _fireDamage > _iceDamage && _fireDamage > _lightDamage;
+        bool canApplyChill = _iceDamage > _fireDamage && _iceDamage > _lightDamage;
+        bool canApplyShock = _lightDamage > _iceDamage && _lightDamage > _fireDamage;
+
+        if (Mathf.Max(_fireDamage, _iceDamage, _lightDamage) <= 0) return;
+
+        while (!canApplyIgnite && !canApplyChill && !canApplyShock)
+        {
+            if (Random.value < .5f && _fireDamage > 0)
+            {
+                canApplyIgnite = true;
+                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+
+            if (Random.value < .5f && _iceDamage > 0)
+            {
+                canApplyChill = true;
+                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+
+            if (Random.value < .5f && _lightDamage > 0)
+            {
+                canApplyShock = true;
+                _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
+                return;
+            }
+        }
+
+        if (canApplyIgnite)
+        {
+            _targetStatus.SetUpIgniteDamage(Mathf.RoundToInt(_fireDamage * .2f));
+        }
+
+        if (canApplyShock)
+        {
+            _targetStatus.SetupShockStrikeDamage(Mathf.RoundToInt(_lightDamage * .1f));
+        }
+
+        _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
     }
 }
