@@ -17,14 +17,14 @@ MonoBehaviour:
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   equipmentType: 0
   strength: 0
-  agility: 0
+  agility: 5
   intelligence: 0
   vitality: 0
-  critChance: 0
-  damage: 0
+  critChance: 12
+  damage: 7
   critPower: 0
-  maxHealth: 0
-  armor: 0
+  maxHealth: 15
+  armor: 10
   evasion: 0
   magicResistance: 0
   fireDamge: 0

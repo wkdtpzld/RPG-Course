@@ -70,7 +70,6 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             Unequipment(oldEquipment);
-            AddItem(oldEquipment);
         }
 
         equipment.Add(newItem);
@@ -81,7 +80,7 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
-    private void Unequipment(ItemData_Equipment itemToDelete)
+    public void Unequipment(ItemData_Equipment itemToDelete)
     {
         if (equipmentDictianory.TryGetValue(itemToDelete, out InventoryItem value))
         {
@@ -197,5 +196,38 @@ public class Inventory : MonoBehaviour
         }
 
         UpdateSlotUI();
+    }
+
+    public bool CanCraft(ItemData_Equipment _itemToCraft, List<InventoryItem> _requireMaterials)
+    {
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+        for (int i = 0; i < _requireMaterials.Count; i++)
+        {
+            if (stashDictianory.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue))
+            {
+                if (stashValue.stackSize >= _requireMaterials[i].stackSize)
+                {
+                    return false;
+                }
+                else
+                {
+                    materialsToRemove.Add(stashValue);
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; i++)
+        {
+            RemoveItem(materialsToRemove[i].data);
+        }
+
+        AddItem(_itemToCraft);
+        Debug.Log("Here is tour item" + _itemToCraft.name);
+
+        return true;
     }
 }

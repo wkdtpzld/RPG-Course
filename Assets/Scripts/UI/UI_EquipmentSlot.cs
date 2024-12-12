@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class UI_EquipmentSlot : UI_ItemSlot
 {
@@ -9,4 +10,10 @@ public class UI_EquipmentSlot : UI_ItemSlot
         gameObject.name = "Equipment slot - " + slotType.ToString();
     }
 
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        Inventory.instance.Unequipment(item.data as ItemData_Equipment);
+        Inventory.instance.AddItem(item.data as ItemData_Equipment);
+        CleanUpSlot();
+    }
 }
