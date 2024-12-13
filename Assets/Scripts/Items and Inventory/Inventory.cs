@@ -70,6 +70,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             Unequipment(oldEquipment);
+            AddItem(oldEquipment);
         }
 
         equipment.Add(newItem);
@@ -201,12 +202,14 @@ public class Inventory : MonoBehaviour
     public bool CanCraft(ItemData_Equipment _itemToCraft, List<InventoryItem> _requireMaterials)
     {
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+
         for (int i = 0; i < _requireMaterials.Count; i++)
         {
             if (stashDictianory.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue))
             {
-                if (stashValue.stackSize >= _requireMaterials[i].stackSize)
+                if (stashValue.stackSize < _requireMaterials[i].stackSize)
                 {
+                    Debug.Log("not enough materials");
                     return false;
                 }
                 else
@@ -216,6 +219,7 @@ public class Inventory : MonoBehaviour
             }
             else
             {
+                Debug.Log("not enough materials, Not have this item");
                 return false;
             }
         }

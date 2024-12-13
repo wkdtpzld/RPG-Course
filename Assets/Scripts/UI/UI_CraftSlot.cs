@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
 public class UI_CraftSlot : UI_ItemSlot
 {
    private void OnEnable()
