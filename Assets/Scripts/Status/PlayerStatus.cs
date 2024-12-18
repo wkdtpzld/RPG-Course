@@ -20,5 +20,7 @@ public class PlayerStatus : CharacterStatus
         base.Die();
 
         player.Die();
+
+        GetComponent<PlayerItemDrop>()?.GenerateDrop();
     }
 }
