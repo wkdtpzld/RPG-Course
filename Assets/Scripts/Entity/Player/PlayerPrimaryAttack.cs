@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerPrimaryAttack : PlayerState
 {
-    private int comboCounter;
+    public int comboCounter { get; private set; }
     private float lastTimeAttacked;
     private float comboWindow = 2;
     public PlayerPrimaryAttack(Player _player, PlayerStateMachine _stateMachine, string _animatorBoolName) : base(_player, _stateMachine, _animatorBoolName)
