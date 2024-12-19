@@ -220,7 +220,6 @@ public class Inventory : MonoBehaviour
             {
                 if (stashValue.stackSize < _requireMaterials[i].stackSize)
                 {
-                    Debug.Log("not enough materials");
                     return false;
                 }
                 else
@@ -230,7 +229,6 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                Debug.Log("not enough materials, Not have this item");
                 return false;
             }
         }
@@ -241,11 +239,25 @@ public class Inventory : MonoBehaviour
         }
 
         AddItem(_itemToCraft);
-        Debug.Log("Here is tour item" + _itemToCraft.name);
 
         return true;
     }
 
     public List<InventoryItem> GetEquipmentList() => equipment;
     public List<InventoryItem> GetStashList() => stash;
+
+    public ItemData_Equipment GetEquipment(EquipmentType _type)
+    {
+        ItemData_Equipment equipmentItem = null;
+
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictianory)
+        {
+            if (item.Key.equipmentType == _type)
+            {
+                equipmentItem = item.Key;
+            }
+        }
+
+        return equipmentItem;
+    }
 }

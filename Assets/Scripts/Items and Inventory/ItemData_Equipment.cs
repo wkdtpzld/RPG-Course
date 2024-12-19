@@ -14,6 +14,8 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    public ItemEffect[] itemEffects;
+
     [Header("Major status")]
     public int strength;
     public int agility;
@@ -84,5 +86,13 @@ public class ItemData_Equipment : ItemData
         playerStatus.fireDamge.RemoveModifier(fireDamge);
         playerStatus.iceDamage.RemoveModifier(iceDamage);
         playerStatus.lightingDamage.RemoveModifier(lightingDamage);
+    }
+
+    public void Effect(Transform _enemyPosition)
+    {
+        foreach (ItemEffect effect in itemEffects)
+        {
+            effect.ExecuteEffect(_enemyPosition);
+        }
     }
 }
