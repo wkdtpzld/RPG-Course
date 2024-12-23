@@ -282,6 +282,14 @@ public class Sword_Skill_Controller : MonoBehaviour
     {
         player.status.DoDamage(_enemy.GetComponent<CharacterStatus>());
         _enemy.StartCoroutine(_enemy.FreezeTimerFor(freezeTimeDuration));
+
+
+        ItemData_Equipment equipedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);
+
+        if (equipedAmulet != null)
+        {
+            equipedAmulet.Effect(_enemy.transform);
+        }
     }
 
     private void StopSpinning()

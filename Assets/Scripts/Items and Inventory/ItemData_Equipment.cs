@@ -15,6 +15,7 @@ public class ItemData_Equipment : ItemData
     public EquipmentType equipmentType;
 
     public ItemEffect[] itemEffects;
+    public float itemCooldown;
 
     [Header("Major status")]
     public int strength;

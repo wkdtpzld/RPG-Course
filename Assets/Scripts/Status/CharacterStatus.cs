@@ -345,4 +345,19 @@ public class CharacterStatus : MonoBehaviour
 
         _targetStatus.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
     }
+
+    public virtual void IncreaseHealthBy(int _amount)
+    {
+        currentHealth += _amount;
+
+        if (currentHealth > GetMaxHealthValue())
+        {
+            currentHealth = GetMaxHealthValue();
+        }
+
+        if (onHealthChanged != null)
+        {
+            onHealthChanged();
+        }
+    }
 }

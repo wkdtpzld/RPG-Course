@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1cb296414e54f59b633117bbad0da2, type: 3}
   m_Name: Ice And Fire
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemName: 
-  icon: {fileID: 0}
-  dropChance: 0
+  itemType: 1
+  itemName: Ice And Fire
+  icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 30
   equipmentType: 0
-  itemEffects: []
+  itemEffects:
+  - {fileID: 11400000, guid: f531f4399cf794e49b0871ffadd2f3bc, type: 2}
   strength: 0
   agility: 0
   intelligence: 0
@@ -29,7 +30,7 @@ MonoBehaviour:
   armor: 0
   evasion: 0
   magicResistance: 0
-  fireDamge: 0
-  iceDamage: 0
+  fireDamge: 5
+  iceDamage: 5
   lightingDamage: 0
   craftingMaterials: []

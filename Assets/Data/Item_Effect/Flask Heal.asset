@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd451c5c9aaf4253ae277b94ffc7de0, type: 3}
-  m_Name: IceAndFire
+  m_Script: {fileID: 11500000, guid: 94e34077e43d244c0ab3b924a634b9b5, type: 3}
+  m_Name: Flask Heal
   m_EditorClassIdentifier: 
-  iceAndFirePrefab: {fileID: 9024009402358878213, guid: 288891abc85894a779d59ea4a9b85eb9, type: 3}
-  xVelocity: 15
+  healPercent: 0.329
