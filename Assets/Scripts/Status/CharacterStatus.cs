@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
@@ -104,7 +105,8 @@ public class CharacterStatus : MonoBehaviour
         totalDamage = CheckTargetArmor(_targetStatus, totalDamage);
         _targetStatus.TakeDamage(totalDamage);
 
-        // DoMagicalDamage(_targetStatus);
+        // 임시
+        DoMagicalDamage(_targetStatus);
     }
 
     public virtual void DoMagicalDamage(CharacterStatus _targetStatus)
@@ -359,5 +361,19 @@ public class CharacterStatus : MonoBehaviour
         {
             onHealthChanged();
         }
+    }
+
+    public virtual void IncreaseStatusBy(int _modifer, float _duration, Status _statusToModify)
+    {
+        StartCoroutine(StatusModCoroutine(_modifer, _duration, _statusToModify));
+    }
+
+    public IEnumerator StatusModCoroutine(int _modifer, float _duration, Status _statusToModify)
+    {
+        _statusToModify.AddModifier(_modifer);
+
+        yield return new WaitForSeconds(_duration);
+
+        _statusToModify.RemoveModifier(_modifer);
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b1cb296414e54f59b633117bbad0da2, type: 3}
-  m_Name: Healing flask
+  m_Name: Fire Flask
   m_EditorClassIdentifier: 
   itemType: 0
   itemName: 
@@ -18,6 +18,7 @@ MonoBehaviour:
   dropChance: 0
   equipmentType: 0
   itemEffects: []
+  itemCooldown: 0
   strength: 0
   agility: 0
   intelligence: 0
