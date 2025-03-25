@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerPrimaryAttack : PlayerState
+public class PlayerPrimaryAttack : PlayerGroundedState
 {
     public int comboCounter { get; private set; }
     private float lastTimeAttacked;

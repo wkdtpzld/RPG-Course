@@ -19,7 +19,7 @@ MonoBehaviour:
   equipmentType: 3
   itemEffects:
   - {fileID: 11400000, guid: d8406504675234687895d1dd9da213de, type: 2}
-  itemCooldown: 3
+  itemCooldown: 15
   strength: 0
   agility: 0
   intelligence: 0
