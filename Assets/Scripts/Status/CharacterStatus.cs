@@ -376,4 +376,29 @@ public class CharacterStatus : MonoBehaviour
 
         _statusToModify.RemoveModifier(_modifer);
     }
+
+    public Status StatusToModify(StatusType _statType)
+    {
+        if (_statType == StatusType.strength) return strength;
+        if (_statType == StatusType.agility) return agility;
+        if (_statType == StatusType.intelligence) return intelligence;
+        if (_statType == StatusType.vitality) return vitality;
+        if (_statType == StatusType.damage) return damage;
+        if (_statType == StatusType.critChance) return critChance;
+        if (_statType == StatusType.critPower) return critPower;
+        if (_statType == StatusType.maxHealth) return maxHealth;
+        if (_statType == StatusType.armor) return armor;
+        if (_statType == StatusType.evasion) return evasion;
+        if (_statType == StatusType.magicResistance) return magicResistance;
+        if (_statType == StatusType.fireDamage) return fireDamge;
+        if (_statType == StatusType.iceDamage) return iceDamage;
+        if (_statType == StatusType.lightingDamage) return lightingDamage;
+
+        return null;
+    }
+
+    public Status GetStatusValue(StatusType _statType)
+    {
+        return StatusToModify(_statType);
+    }
 }
