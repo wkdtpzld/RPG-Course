@@ -152,7 +152,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData _item)
     {
-        if (_item.itemType == ItemType.Equipment)
+        if (_item.itemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(_item);
         }
@@ -190,6 +190,15 @@ public class Inventory : MonoBehaviour
             inventory.Add(newItem);
             inventoryDictianory.Add(_item, newItem);
         }
+    }
+
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= inventoryItemSlot.Length)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void RemoveItem(ItemData _item)
