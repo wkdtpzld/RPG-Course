@@ -8,6 +8,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject optionsUI;
     public UI_ItemTooltip itemTooltip;
     public UI_StatTooltip statTooltip;
+    public UI_CraftWindow craftWindow;
 
     private void Start()
     {
@@ -49,8 +50,6 @@ public class UI : MonoBehaviour
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-
-        Debug.Log(_menu);
 
         if (_menu != null)
         {
