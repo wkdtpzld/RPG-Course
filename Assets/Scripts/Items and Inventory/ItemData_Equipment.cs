@@ -14,8 +14,11 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    [Header("Unique effect")]
     public ItemEffect[] itemEffects;
     public float itemCooldown;
+    [TextArea]
+    public string itemEffectDescription;
 
     [Header("Major status")]
     public int strength;
@@ -129,6 +132,12 @@ public class ItemData_Equipment : ItemData
                 sb.AppendLine();
                 sb.Append("");
             }
+        }
+
+        if (itemEffectDescription.Length > 0)
+        {
+            sb.AppendLine();
+            sb.Append(itemEffectDescription);
         }
 
         return sb.ToString();
